@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="page-header">
+    <div>
+        <h2>Suppliers</h2>
+        <p>Manage supplier contacts and purchasing sources.</p>
+    </div>
+    <a class="button" href="{{ url_for('supplier_create') }}">New Supplier</a>
+</section>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Contact</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Address</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for supplier in suppliers %}
+        <tr>
+            <td>{{ supplier.supplier_id }}</td>
+            <td>{{ supplier.name }}</td>
+            <td>{{ supplier.contact_name }}</td>
+            <td>{{ supplier.phone }}</td>
+            <td>{{ supplier.email }}</td>
+            <td>{{ supplier.address }}</td>
+            <td class="actions">
+                <a href="{{ url_for('supplier_edit', supplier_id=supplier.supplier_id) }}">Edit</a>
+                <form method="post" action="{{ url_for('supplier_delete', supplier_id=supplier.supplier_id) }}" onsubmit="return confirm('Delete this supplier?');">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

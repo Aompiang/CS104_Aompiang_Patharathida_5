@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="page-header">
+    <div>
+        <h2>{{ 'Edit Purchase' if purchase else 'Add New Purchase' }}</h2>
+        <p>Record purchase details and costs for inventory sourcing.</p>
+    </div>
+    <a class="button" href="{{ url_for('purchase_list') }}">Back to Purchases</a>
+</section>
+<form method="post" class="form-grid">
+    <label>Item<select name="item_id" required>
+        {% for item in items %}
+            <option value="{{ item.item_id }}" {% if purchase and purchase.item_id == item.item_id %}selected{% endif %}>{{ item.name }}</option>
+        {% endfor %}
+    </select></label>
+    <label>Supplier<select name="supplier_id" required>
+        {% for supplier in suppliers %}
+            <option value="{{ supplier.supplier_id }}" {% if purchase and purchase.supplier_id == supplier.supplier_id %}selected{% endif %}>{{ supplier.name }}</option>
+        {% endfor %}
+    </select></label>
+    <label>Purchase Date<input type="date" name="purchase_date" value="{{ purchase.purchase_date if purchase else '' }}" required></label>
+    <label>Quantity<input type="number" name="quantity" value="{{ purchase.quantity if purchase else '1' }}" min="1" required></label>
+    <label>Unit Cost<input type="number" step="0.01" name="unit_cost" value="{{ purchase.unit_cost if purchase else '0.00' }}" required></label>
+    <div class="form-actions">
+        <button type="submit">{{ 'Save Purchase' if purchase else 'Create Purchase' }}</button>
+    </div>
+</form>
+{% endblock %}

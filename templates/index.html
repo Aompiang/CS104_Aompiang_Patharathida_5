@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="dashboard">
+    <div class="cards-grid">
+        <article class="card">
+            <h2>Total Sales</h2>
+            <p>${{ '{:,.2f}'.format(total_sales) }}</p>
+        </article>
+        <article class="card">
+            <h2>Total Purchase Cost</h2>
+            <p>${{ '{:,.2f}'.format(total_purchase) }}</p>
+        </article>
+        <article class="card">
+            <h2>Gross Profit</h2>
+            <p>${{ '{:,.2f}'.format(profit) }}</p>
+        </article>
+        <article class="card">
+            <h2>Loss</h2>
+            <p>${{ '{:,.2f}'.format(loss) }}</p>
+        </article>
+        <article class="card">
+            <h2>Inventory Value</h2>
+            <p>${{ '{:,.2f}'.format(inventory_value) }}</p>
+        </article>
+        <article class="card">
+            <h2>Records</h2>
+            <p>Items {{ item_count }} | Categories {{ category_count }} | Suppliers {{ supplier_count }}</p>
+        </article>
+    </div>
+</section>
+<section class="summary-tables">
+    <div class="panel">
+        <h2>Best Selling Materials</h2>
+        <table>
+            <thead><tr><th>Material</th><th>Sold Units</th></tr></thead>
+            <tbody>
+                {% for row in best_sellers %}
+                <tr><td>{{ row.item_name }}</td><td>{{ row.sold_units }}</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="panel">
+        <h2>Low Stock Items</h2>
+        <table>
+            <thead><tr><th>Material</th><th>Stock</th><th>Reorder Level</th></tr></thead>
+            <tbody>
+                {% for item in low_stock %}
+                <tr><td>{{ item.name }}</td><td>{{ item.stock_quantity }}</td><td>{{ item.reorder_level }}</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

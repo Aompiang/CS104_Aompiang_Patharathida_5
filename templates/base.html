@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Construction Inventory Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+</head>
+<body>
+    <header>
+        <div class="brand">
+            <h1>Construction Inventory Management</h1>
+            <p>Material stock, purchase and sales dashboard for the building supply team.</p>
+        </div>
+        <nav>
+            <a href="{{ url_for('index') }}">Dashboard</a>
+            <a href="{{ url_for('category_list') }}">Categories</a>
+            <a href="{{ url_for('item_list') }}">Items</a>
+            <a href="{{ url_for('supplier_list') }}">Suppliers</a>
+        </nav>
+    </header>
+    <main>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <section class="alerts">
+                {% for category, message in messages %}
+                    <div class="alert {{ category }}">{{ message }}</div>
+                {% endfor %}
+            </section>
+        {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </main>
+    <footer>
+        <p>Deployable Flask inventory system with SQLite database.</p>
+    </footer>
+</body>
+</html>

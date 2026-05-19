@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="page-header">
+    <div>
+        <h2>Sales Records</h2>
+        <p>Track product deliveries and revenue performance.</p>
+    </div>
+    <a class="button" href="{{ url_for('sale_create') }}">New Sale</a>
+</section>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Item</th>
+            <th>Date</th>
+            <th>Qty</th>
+            <th>Sale Price</th>
+            <th>Revenue</th>
+            <th>Cost</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for sale in sales %}
+        <tr>
+            <td>{{ sale.sale_id }}</td>
+            <td>{{ sale.item_name }}</td>
+            <td>{{ sale.sale_date }}</td>
+            <td>{{ sale.quantity }}</td>
+            <td>${{ '{:,.2f}'.format(sale.unit_price) }}</td>
+            <td>${{ '{:,.2f}'.format(sale.total_revenue) }}</td>
+            <td>${{ '{:,.2f}'.format(sale.total_cost) }}</td>
+            <td class="actions">
+                <a href="{{ url_for('sale_edit', sale_id=sale.sale_id) }}">Edit</a>
+                <form method="post" action="{{ url_for('sale_delete', sale_id=sale.sale_id) }}" onsubmit="return confirm('Delete this sale?');">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

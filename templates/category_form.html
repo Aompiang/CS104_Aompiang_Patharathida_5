@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="page-header">
+    <div>
+        <h2>{{ 'Edit Category' if category else 'Add New Category' }}</h2>
+        <p>Define category names and descriptions for items.</p>
+    </div>
+    <a class="button" href="{{ url_for('category_list') }}">Back to Categories</a>
+</section>
+<form method="post" class="form-grid">
+    <label>Name<input name="name" value="{{ category.name if category else '' }}" required></label>
+    <label>Description<textarea name="description">{{ category.description if category else '' }}</textarea></label>
+    <div class="form-actions">
+        <button type="submit">{{ 'Save Category' if category else 'Create Category' }}</button>
+    </div>
+</form>
+{% endblock %}

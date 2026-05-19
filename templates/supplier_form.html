@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="page-header">
+    <div>
+        <h2>{{ 'Edit Supplier' if supplier else 'Add New Supplier' }}</h2>
+        <p>Capture supplier information for purchase sourcing.</p>
+    </div>
+    <a class="button" href="{{ url_for('supplier_list') }}">Back to Suppliers</a>
+</section>
+<form method="post" class="form-grid">
+    <label>Name<input name="name" value="{{ supplier.name if supplier else '' }}" required></label>
+    <label>Contact Name<input name="contact_name" value="{{ supplier.contact_name if supplier else '' }}"></label>
+    <label>Phone<input name="phone" value="{{ supplier.phone if supplier else '' }}"></label>
+    <label>Email<input type="email" name="email" value="{{ supplier.email if supplier else '' }}"></label>
+    <label>Address<textarea name="address">{{ supplier.address if supplier else '' }}</textarea></label>
+    <div class="form-actions">
+        <button type="submit">{{ 'Save Supplier' if supplier else 'Create Supplier' }}</button>
+    </div>
+</form>
+{% endblock %}

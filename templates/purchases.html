@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="page-header">
+    <div>
+        <h2>Purchase Records</h2>
+        <p>Track material purchases from suppliers and total cost data.</p>
+    </div>
+    <a class="button" href="{{ url_for('purchase_create') }}">New Purchase</a>
+</section>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Item</th>
+            <th>Supplier</th>
+            <th>Date</th>
+            <th>Qty</th>
+            <th>Unit Cost</th>
+            <th>Total Cost</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for purchase in purchases %}
+        <tr>
+            <td>{{ purchase.purchase_id }}</td>
+            <td>{{ purchase.item_name }}</td>
+            <td>{{ purchase.supplier_name }}</td>
+            <td>{{ purchase.purchase_date }}</td>
+            <td>{{ purchase.quantity }}</td>
+            <td>${{ '{:,.2f}'.format(purchase.unit_cost) }}</td>
+            <td>${{ '{:,.2f}'.format(purchase.total_cost) }}</td>
+            <td class="actions">
+                <a href="{{ url_for('purchase_edit', purchase_id=purchase.purchase_id) }}">Edit</a>
+                <form method="post" action="{{ url_for('purchase_delete', purchase_id=purchase.purchase_id) }}" onsubmit="return confirm('Delete this purchase?');">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="page-header">
+    <div>
+        <h2>Categories</h2>
+        <p>Manage material categories used in the inventory.</p>
+    </div>
+    <a class="button" href="{{ url_for('category_create') }}">New Category</a>
+</section>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for category in categories %}
+        <tr>
+            <td>{{ category.category_id }}</td>
+            <td>{{ category.name }}</td>
+            <td>{{ category.description }}</td>
+            <td class="actions">
+                <a href="{{ url_for('category_edit', category_id=category.category_id) }}">Edit</a>
+                <form method="post" action="{{ url_for('category_delete', category_id=category.category_id) }}" onsubmit="return confirm('Delete this category?');">
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
